@@ -1,0 +1,216 @@
+---
+title: "Public Awareness Of And Trust In Official Statistics, Northern Ireland 2024"
+lang: "en"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 4
+    code_download: no
+    css: "../style.css"
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../../outputs/",
+      envir = globalenv()
+    )
+  })
+---
+
+<div id = "cookie-banner"></div>
+<script src = "../cookies.js"></script>
+
+```{r settings, include=FALSE}
+# this chunk sets chunk options for all chunks in this file
+knitr::opts_chunk$set(
+  message = FALSE, echo = FALSE, warning = FALSE, out.width = "100%", fig.height = 4
+)
+
+library(here)
+source(paste0(here(), "/code/html_publication/data_prep.R"))
+
+#check and edit Qu3a below to match NI Assembly/ Elected Bodies question
+```
+
+```{css}
+h3, h4 {
+  color: #1460aa;
+  font-weight: bold;
+}
+```
+
+<div data-nics-theme="`r nics_theme`">
+
+`r f_banner(title = rmarkdown::metadata$title, subtitle = "Appendix C")` 
+
+<div id="main" role="main">
+
+
+[Back to full report](public-awareness-of-and-trust-in-official-statistics-northern-ireland-`r current_year`.html)
+
+## Appendix C: Survey Questions
+
+The following questions were included in the Continuous Household Survey (CHS) between `r survey_start_mth` and `r survey_end_mth` `r current_year`:
+
+### Qu 1: Awareness of NISRA
+
+Before being contacted about this survey had you heard of NISRA, the Northern Ireland Statistics and Research Agency?
+
+1. Yes
+1. No
+
+_If answered 'yes' to Qu1 then_
+
+<div style = "margin-left: 2em">
+
+#### Qu 2a: Aware statistics produced by NISRA 
+
+NISRA produces official statistics for Northern Ireland on a wide range of issues. 
+
+I am going to list a number of these and want you to tell me if you knew before today that this information was produced by NISRA statisticians. 
+
+```{r PCOS1c}
+
+outputs <- c()
+
+for (i in 1:length(PCOS1c_vars)) {
+  outputs[i] <- sub("\\..*", "", attributes(data_final[[PCOS1c_vars[i]]])$label) %>% trimws()
+}
+
+pcos1c <- data.frame(
+  Question = outputs) %>%
+  mutate(`Aware produced by NISRA?` = rep("Yes/No", nrow(.)))
+
+kbl(pcos1c) %>%
+  kable_styling()
+
+```
+
+</div>
+
+_If answered 'no' to Qu1 then_
+
+<div style = "margin-left: 2em">
+
+#### Qu 2b: Aware of NISRA statistics 
+
+NISRA produces official statistics for Northern Ireland on a wide range of issues.
+
+I am going to list a number of these and want you to tell me if you have heard of them or not.
+
+```{r PCOS1d}
+kbl(pcos1c %>%
+      rename(`Heard of?` = `Aware produced by NISRA?`)) %>%
+  kable_styling()
+```
+
+</div>
+
+### Qu 3: Trust – Institutions
+
+I will name a list of institutions. For each, please indicate whether you tend to trust it or tend not to trust it.
+
+<div style = "margin-left: 2em">
+
+#### Qu 3a: Trust Civil Service
+
+How much do you trust the Civil Service?
+
+1. Trust a great deal
+1. Tend to trust
+1. Tend to distrust
+1. Distrust greatly
+
+#### Qu 3a: Trust NI Assembly
+
+How much do you trust the NI Assembly?
+
+1. Trust a great deal
+1. Tend to trust
+1. Tend to distrust
+1. Distrust greatly
+
+#### Qu 3a: Trust media
+
+How much do you trust the media?
+
+1. Trust a great deal
+1. Tend to trust
+1. Tend to distrust
+1. Distrust greatly
+
+#### Qu 3a: Trust NISRA
+
+How much do you trust NISRA?
+
+1. Trust a great deal
+1. Tend to trust
+1. Tend to distrust
+1. Distrust greatly
+
+</div>
+
+### Qu 4: Trust NISRA Statistics
+
+Personally, how much trust do you have in statistics produced by NISRA? 
+
+1. Trust them greatly
+1. Tend to trust them
+1. Tend not to trust them
+1. Distrust them greatly
+
+### Qu 5: Value
+
+To what extent do you agree or disagree with the following statement ‘Statistics produced by NISRA are important to understand Northern Ireland?’
+
+1. Strongly agree
+1. Tend to agree
+1. Tend to disagree
+1. Strongly disagree
+
+### Qu 6: Political Interference
+
+To what extent do you agree or disagree with the following statement ‘I believe that the statistics produced by NISRA are free from political interference’
+
+1. Strongly agree
+1. Tend to agree
+1. Tend to disagree
+1. Strongly disagree
+
+### Qu 7: Confidentiality
+To what extent do you agree or disagree with the following statement: 'I believe that personal information that is provided to NISRA will be kept confidential.'
+
+1. Strongly agree
+1. Tend to agree
+1. Tend to disagree
+1. Strongly disagree
+
+<!-- closing main div -->
+</div>
+
+`r f_footer()`
+
+
+```{js}
+
+// Function to remove map shapes from tab order, and add tabs to table of contents
+
+function tabOrder() {
+  
+  // Make side menu tabbable
+
+  let headings = document.getElementsByClassName('tocify-item list-group-item');
+  
+  for (let i = 0; i < headings.length; i ++) {
+    headings[i].innerHTML = "<a href='#" + headings[i].getAttribute("data-unique") + "'>" + headings[i].innerHTML +  "</a>";
+  }
+  
+};
+
+// Instruct web browser to run above function when loaded
+window.onload = tabOrder;
+```
+
+
+<!-- close data-nics-theme div-->
+</div>
